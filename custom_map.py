@@ -4,7 +4,7 @@ import matplotlib.colors as mcolors
 from scipy.stats import t
 
 
-def cmap_pearson(features, n, alpha, name="bajon"):
+def cmap_pearson(features, n, alpha, name="g-bajon"):
     K = (features * (features - 1)) / 2
     alpha_eff = alpha / K  # Bonferroni
     df = n - 2
@@ -15,12 +15,17 @@ def cmap_pearson(features, n, alpha, name="bajon"):
     dt = 1 / 128
     steps = int(np.ceil(r_crit / dt)*2)
 
-    cmap = mpl.colormaps["Greys"]
-    cmap_r = mpl.colormaps["Greys_r"]
+    if name=="h-bajon":
+        cmap = mpl.colormaps["RdBu_r"]
+        cmap_r = mpl.colormaps["RdBu_r"]
+    if name=="g-bajon":
+        cmap = mpl.colormaps["Greys"]
+        cmap_r = mpl.colormaps["Greys_r"]
+    filter = mpl.colormaps["Greys"]
 
     rgba1 = cmap_r(np.linspace(0, 0.7, 128 - steps//2))
-    rgba2 = cmap(np.linspace(0, 0, steps))
     rgba3 = cmap(np.linspace(0.3, 1, 128 - steps//2))
+    rgba2 = filter(np.linspace(0, 0, steps))
     rgba = np.concatenate([rgba1, rgba2, rgba3], axis=0)[:256]
 
     hex256 = [mcolors.to_hex(c) for c in rgba]
