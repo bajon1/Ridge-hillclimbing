@@ -1,10 +1,13 @@
+from typing import Literal
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.colors as mcolors
 from scipy.stats import t
+from typing import Literal
 
 
-def cmap_pearson(features, n, alpha, name="g-bajon"):
+def cmap_pearson(features:int, n:int, alpha:int, name:Literal["h-bajon","g-bajon"]="g-bajon") -> dict:
     K = (features * (features - 1)) / 2
     alpha_eff = alpha / K  # Bonferroni
     df = n - 2
